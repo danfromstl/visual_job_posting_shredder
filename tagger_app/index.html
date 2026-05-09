@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Job Snippet Tagger</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark"></span>
+        <h1>Job Snippet Tagger</h1>
+      </div>
+      <div class="controls">
+        <label class="control">
+          <span>Source</span>
+          <select id="fileSelect"></select>
+        </label>
+        <label class="control search-control">
+          <span>Search</span>
+          <input id="searchInput" type="search" autocomplete="off">
+        </label>
+        <label class="control">
+          <span>View</span>
+          <select id="filterSelect">
+            <option value="all">All</option>
+            <option value="untagged">Untagged</option>
+            <option value="notRelevant">Not relevant</option>
+          </select>
+        </label>
+      </div>
+      <div class="status" id="statusText">Loading</div>
+    </header>
+
+    <main class="workspace">
+      <section class="snippet-pane" aria-label="Snippets">
+        <div class="list-head">
+          <div class="posting-nav">
+            <button id="prevPostButton" type="button" title="Left Arrow">Previous posting</button>
+            <div class="posting-copy">
+              <strong id="postingTitle">No posting selected</strong>
+              <span id="postingMeta">0 of 0</span>
+            </div>
+            <button id="nextPostButton" type="button" title="Right Arrow">Next posting</button>
+          </div>
+          <div class="list-stats">
+            <div id="countText">0 rows</div>
+            <div id="saveText">Idle</div>
+            <div id="scoreText">Scoring idle</div>
+          </div>
+        </div>
+        <div id="snippetList" class="snippet-list" tabindex="0"></div>
+      </section>
+
+      <aside class="detail-pane" aria-label="Selected snippet">
+        <div class="detail-head">
+          <div>
+            <div class="eyebrow" id="detailCategory">No row selected</div>
+            <h2 id="detailTitle">-</h2>
+          </div>
+          <div class="tag-stack">
+            <div class="tag-indicator" id="tagIndicator">Untagged</div>
+            <div class="suggestion-indicator" id="suggestionIndicator">No suggestion</div>
+          </div>
+        </div>
+
+        <div class="detail-body">
+          <div class="meta-grid">
+            <div>
+              <span>Company</span>
+              <strong id="detailCompany">-</strong>
+            </div>
+            <div>
+              <span>Line</span>
+              <strong id="detailLine">-</strong>
+            </div>
+            <div>
+              <span>Job</span>
+              <strong id="detailJob">-</strong>
+            </div>
+            <div>
+              <span>ID</span>
+              <strong id="detailId">-</strong>
+            </div>
+          </div>
+
+          <div class="selected-text" id="detailText"></div>
+        </div>
+
+        <div class="actions">
+          <button id="markButton" type="button" title="R">Not relevant</button>
+          <button id="clearButton" type="button" title="U">Clear</button>
+        </div>
+      </aside>
+    </main>
+
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>
