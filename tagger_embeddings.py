@@ -4,7 +4,6 @@ import hashlib
 import json
 import math
 import os
-import statistics
 from concurrent.futures import Future, ThreadPoolExecutor
 from pathlib import Path
 from threading import RLock
@@ -12,6 +11,8 @@ from typing import Any
 
 
 MODEL_NAME = "sentence-transformers/all-mpnet-base-v2"
+NOT_RELEVANT_LABEL = "not_relevant"
+REVIEWED_RELEVANT_LABEL = "reviewed_relevant"
 
 
 def text_hash(text: str) -> str:
@@ -26,6 +27,8 @@ def normalize_vector(vector: list[float]) -> list[float]:
 
 
 def cosine(left: list[float], right: list[float]) -> float:
+    if not left or not right:
+        return 0.0
     left_norm = math.sqrt(sum(value * value for value in left))
     right_norm = math.sqrt(sum(value * value for value in right))
     if not left_norm or not right_norm:
@@ -37,19 +40,20 @@ class EmbeddingRecommender:
     def __init__(self, cache_dir: Path, model_name: str = MODEL_NAME) -> None:
         self.cache_dir = cache_dir
         self.model_name = model_name
-        self.tag_cache_path = cache_dir / "not_relevant_vectors.jsonl"
+        self.seed_cache_path = cache_dir / "seed_vectors.jsonl"
+        self.legacy_not_relevant_cache_path = cache_dir / "not_relevant_vectors.jsonl"
         self._lock = RLock()
         self._executor = ThreadPoolExecutor(max_workers=1, thread_name_prefix="tagger-embeddings")
         self._refresh_future: Future | None = None
+        self._pending_seed_sets: tuple[dict[str, dict], dict[str, dict]] | None = None
         self._model: Any | None = None
         self._model_error: str | None = None
-        self._tag_vectors: dict[str, dict[str, Any]] = {}
+        self._seed_vectors: dict[str, dict[str, Any]] = {}
         self._snippet_vectors: dict[str, list[float]] = {}
-        self._average_vector: list[float] | None = None
-        self._seed_count = 0
-        self._threshold: float | None = None
+        self._clusters: list[dict[str, Any]] = []
+        self._seed_counts = {NOT_RELEVANT_LABEL: 0, REVIEWED_RELEVANT_LABEL: 0}
         self._signature = ""
-        self._load_tag_cache()
+        self._load_seed_cache()
 
     def status(self) -> dict[str, Any]:
         with self._lock:
@@ -58,54 +62,94 @@ class EmbeddingRecommender:
                 "model_name": self.model_name,
                 "available": self._model is not None and self._model_error is None,
                 "load_error": self._model_error,
-                "seed_count": self._seed_count,
-                "threshold": self._threshold,
+                "not_relevant_seed_count": self._seed_counts[NOT_RELEVANT_LABEL],
+                "reviewed_relevant_seed_count": self._seed_counts[REVIEWED_RELEVANT_LABEL],
+                "seed_count": sum(self._seed_counts.values()),
+                "irrelevance_cluster_count": len(self._clusters),
                 "refresh_running": running,
-                "cached_not_relevant_vectors": len(self._tag_vectors),
+                "cached_seed_vectors": len(self._seed_vectors),
                 "cached_snippet_vectors": len(self._snippet_vectors),
             }
 
-    def queue_average_refresh(self, annotations: dict[str, dict]) -> None:
-        snapshot = dict(annotations)
+    def queue_refresh(
+        self,
+        not_relevant_annotations: dict[str, dict],
+        reviewed_relevant_annotations: dict[str, dict],
+    ) -> None:
+        not_relevant_snapshot = dict(not_relevant_annotations)
+        reviewed_relevant_snapshot = dict(reviewed_relevant_annotations)
         with self._lock:
+            self._pending_seed_sets = (not_relevant_snapshot, reviewed_relevant_snapshot)
             if self._refresh_future is not None and not self._refresh_future.done():
                 return
-            self._refresh_future = self._executor.submit(self.refresh_average, snapshot)
+            self._refresh_future = self._executor.submit(self._refresh_pending)
 
-    def score_rows(self, annotations: dict[str, dict], rows: list[dict]) -> dict[str, Any]:
+    def _refresh_pending(self) -> dict[str, Any]:
+        while True:
+            with self._lock:
+                snapshot = self._pending_seed_sets
+                self._pending_seed_sets = None
+            if snapshot is None:
+                return self.status()
+            self.refresh_seed_sets(*snapshot)
+            with self._lock:
+                if self._pending_seed_sets is None:
+                    return self.status()
+
+    def score_rows(
+        self,
+        not_relevant_annotations: dict[str, dict],
+        reviewed_relevant_annotations: dict[str, dict],
+        rows: list[dict],
+    ) -> dict[str, Any]:
         try:
-            self.refresh_average(annotations)
+            self.refresh_seed_sets(not_relevant_annotations, reviewed_relevant_annotations)
         except Exception as exc:
             return self._unavailable_payload(str(exc))
 
         with self._lock:
-            average_vector = self._average_vector
-            threshold = self._threshold
-            seed_count = self._seed_count
+            seed_counts = dict(self._seed_counts)
+            clusters = list(self._clusters)
+            not_relevant_vectors = self._vectors_for_label(NOT_RELEVANT_LABEL)
+            reviewed_relevant_vectors = self._vectors_for_label(REVIEWED_RELEVANT_LABEL)
 
-        if average_vector is None or threshold is None or not seed_count:
+        if not not_relevant_vectors and not reviewed_relevant_vectors:
             return {
                 "available": False,
                 "reason": "no_seed_tags",
-                "message": "No not-relevant seed tags are available yet.",
+                "message": "No reviewed seed tags are available yet.",
                 "model_name": self.model_name,
                 "recommendations": [],
-                "seed_count": seed_count,
-                "threshold": threshold,
+                **self._count_payload(seed_counts, clusters),
             }
 
         texts = [str(row.get("text", "")) for row in rows]
         vectors = self._vectors_for_rows(rows, texts)
         recommendations = []
         for row, vector in zip(rows, vectors):
-            score = cosine(vector, average_vector)
-            label = "not_relevant" if score >= threshold else "relevant"
+            not_relevant_score, _ = self._nearest(vector, not_relevant_vectors)
+            reviewed_relevant_score, _ = self._nearest(vector, reviewed_relevant_vectors)
+            label, score, confidence = self._label_from_scores(
+                not_relevant_score,
+                reviewed_relevant_score,
+                bool(not_relevant_vectors),
+                bool(reviewed_relevant_vectors),
+            )
+            cluster = self._nearest_cluster(vector, clusters)
             recommendations.append(
                 {
                     "id": row.get("id"),
                     "score": round(score, 4),
-                    "threshold": round(threshold, 4),
+                    "confidence": round(confidence, 4),
+                    "not_relevant_score": round(not_relevant_score, 4) if not_relevant_vectors else None,
+                    "reviewed_relevant_score": round(reviewed_relevant_score, 4)
+                    if reviewed_relevant_vectors
+                    else None,
+                    "margin": round(not_relevant_score - reviewed_relevant_score, 4)
+                    if not_relevant_vectors and reviewed_relevant_vectors
+                    else None,
                     "suggested_label": label,
+                    "irrelevance_cluster": cluster,
                     "model_name": self.model_name,
                 }
             )
@@ -113,101 +157,269 @@ class EmbeddingRecommender:
         return {
             "available": True,
             "model_name": self.model_name,
-            "seed_count": seed_count,
-            "threshold": round(threshold, 4),
             "recommendations": recommendations,
+            **self._count_payload(seed_counts, clusters),
         }
 
-    def refresh_average(self, annotations: dict[str, dict]) -> dict[str, Any]:
-        records = []
-        for key, record in sorted(annotations.items()):
-            if record.get("not_relevant") is not True:
-                continue
-            snippet_text = str(record.get("text", "")).strip()
-            if snippet_text:
-                records.append((key, snippet_text))
+    def cluster_summaries(
+        self,
+        not_relevant_annotations: dict[str, dict],
+        reviewed_relevant_annotations: dict[str, dict],
+    ) -> dict[str, Any]:
+        try:
+            self.refresh_seed_sets(not_relevant_annotations, reviewed_relevant_annotations)
+        except Exception as exc:
+            return self._unavailable_payload(str(exc))
 
-        signature = self._signature_for_records(records)
         with self._lock:
-            if signature == self._signature and self._average_vector is not None:
+            clusters = [
+                {
+                    "cluster_id": cluster["cluster_id"],
+                    "size": cluster["size"],
+                    "exemplar": cluster["exemplar"],
+                    "examples": cluster["examples"],
+                }
+                for cluster in self._clusters
+            ]
+            seed_counts = dict(self._seed_counts)
+
+        return {
+            "available": True,
+            "model_name": self.model_name,
+            "clusters": clusters,
+            **self._count_payload(seed_counts, clusters),
+        }
+
+    def refresh_seed_sets(
+        self,
+        not_relevant_annotations: dict[str, dict],
+        reviewed_relevant_annotations: dict[str, dict],
+    ) -> dict[str, Any]:
+        seed_records = self._seed_records(not_relevant_annotations, reviewed_relevant_annotations)
+        signature = self._signature_for_records(seed_records)
+        with self._lock:
+            if signature == self._signature and self._clusters:
                 return self.status()
 
-        if not records:
-            with self._lock:
-                self._average_vector = None
-                self._seed_count = 0
-                self._threshold = None
-                self._signature = signature
-            return self.status()
-
+        active_cache_keys = set()
         missing = []
-        active_keys = set()
+        cache_changed = False
         with self._lock:
-            for key, snippet_text in records:
-                active_keys.add(key)
-                digest = text_hash(snippet_text)
-                cached = self._tag_vectors.get(key)
-                if cached is None or cached.get("text_hash") != digest:
-                    missing.append((key, digest, snippet_text))
+            for record in seed_records:
+                cache_key = self._seed_cache_key(record["label"], record["key"])
+                active_cache_keys.add(cache_key)
+                cached = self._seed_vectors.get(cache_key)
+                if cached is None or cached.get("text_hash") != record["text_hash"]:
+                    missing.append(record)
+                else:
+                    metadata = {key: value for key, value in record.items() if key != "embedding"}
+                    if any(cached.get(key) != value for key, value in metadata.items()):
+                        cached.update(metadata)
+                        cache_changed = True
 
         if missing:
-            vectors = self._encode([item[2] for item in missing])
+            vectors = self._encode([record["text"] for record in missing])
             with self._lock:
-                for (key, digest, _), vector in zip(missing, vectors):
-                    self._tag_vectors[key] = {
-                        "key": key,
-                        "text_hash": digest,
+                for record, vector in zip(missing, vectors):
+                    self._seed_vectors[self._seed_cache_key(record["label"], record["key"])] = {
+                        **record,
                         "embedding": vector,
                         "model_name": self.model_name,
                     }
-                for key in list(self._tag_vectors):
-                    if key not in active_keys:
-                        self._tag_vectors.pop(key, None)
-                self._write_tag_cache()
-
+        cache_changed = cache_changed or bool(missing)
         with self._lock:
-            vectors = [
-                self._tag_vectors[key]["embedding"]
-                for key, _ in records
-                if key in self._tag_vectors
+            for cache_key in list(self._seed_vectors):
+                if cache_key not in active_cache_keys:
+                    self._seed_vectors.pop(cache_key, None)
+                    cache_changed = True
+            if cache_changed:
+                self._write_seed_cache()
+
+            not_relevant_vector_records = [
+                self._seed_vectors[self._seed_cache_key(record["label"], record["key"])]
+                for record in seed_records
+                if record["label"] == NOT_RELEVANT_LABEL
+                and self._seed_cache_key(record["label"], record["key"]) in self._seed_vectors
             ]
+            self._clusters = self._build_irrelevance_clusters(not_relevant_vector_records)
+            self._seed_counts = {
+                NOT_RELEVANT_LABEL: sum(1 for record in seed_records if record["label"] == NOT_RELEVANT_LABEL),
+                REVIEWED_RELEVANT_LABEL: sum(
+                    1 for record in seed_records if record["label"] == REVIEWED_RELEVANT_LABEL
+                ),
+            }
+            self._signature = signature
 
+        return self.status()
+
+    def _seed_records(
+        self,
+        not_relevant_annotations: dict[str, dict],
+        reviewed_relevant_annotations: dict[str, dict],
+    ) -> list[dict[str, Any]]:
+        records = []
+        not_relevant_keys = set(not_relevant_annotations)
+        for key, record in sorted(not_relevant_annotations.items()):
+            snippet_text = str(record.get("text", "")).strip()
+            if snippet_text:
+                records.append(self._seed_record(NOT_RELEVANT_LABEL, key, record, snippet_text))
+
+        for key, record in sorted(reviewed_relevant_annotations.items()):
+            if key in not_relevant_keys:
+                continue
+            snippet_text = str(record.get("text", "")).strip()
+            if snippet_text:
+                records.append(self._seed_record(REVIEWED_RELEVANT_LABEL, key, record, snippet_text))
+        return records
+
+    def _seed_record(self, label: str, key: str, record: dict, snippet_text: str) -> dict[str, Any]:
+        return {
+            "label": label,
+            "key": key,
+            "source_file": record.get("source_file"),
+            "id": record.get("id"),
+            "job_key": record.get("job_key"),
+            "job_name": record.get("job_name"),
+            "company": record.get("company"),
+            "title": record.get("title"),
+            "category": record.get("category"),
+            "text": snippet_text,
+            "text_hash": text_hash(snippet_text),
+        }
+
+    def _label_from_scores(
+        self,
+        not_relevant_score: float,
+        reviewed_relevant_score: float,
+        has_not_relevant: bool,
+        has_reviewed_relevant: bool,
+    ) -> tuple[str, float, float]:
+        if has_not_relevant and has_reviewed_relevant:
+            margin = not_relevant_score - reviewed_relevant_score
+            if margin >= 0.015:
+                return NOT_RELEVANT_LABEL, not_relevant_score, abs(margin)
+            return "relevant", reviewed_relevant_score, abs(margin)
+        if has_not_relevant:
+            if not_relevant_score >= 0.48:
+                return NOT_RELEVANT_LABEL, not_relevant_score, not_relevant_score
+            return "relevant", not_relevant_score, 1.0 - not_relevant_score
+        return "relevant", reviewed_relevant_score, reviewed_relevant_score
+
+    def _build_irrelevance_clusters(self, records: list[dict[str, Any]]) -> list[dict[str, Any]]:
+        clusters: list[dict[str, Any]] = []
+        cluster_threshold = 0.68
+
+        for record in sorted(records, key=lambda item: str(item["key"])):
+            vector = record["embedding"]
+            best_index = -1
+            best_score = -1.0
+            for index, cluster in enumerate(clusters):
+                score = cosine(vector, cluster["centroid"])
+                if score > best_score:
+                    best_score = score
+                    best_index = index
+
+            if best_index >= 0 and best_score >= cluster_threshold:
+                cluster = clusters[best_index]
+                cluster["members"].append(record)
+                cluster["centroid"] = self._centroid([member["embedding"] for member in cluster["members"]])
+            else:
+                clusters.append({"centroid": vector, "members": [record]})
+
+        summaries = []
+        for cluster in sorted(clusters, key=lambda item: (-len(item["members"]), str(item["members"][0]["key"]))):
+            centroid = cluster["centroid"]
+            members = sorted(
+                cluster["members"],
+                key=lambda member: cosine(member["embedding"], centroid),
+                reverse=True,
+            )
+            summaries.append(
+                {
+                    "centroid": centroid,
+                    "size": len(members),
+                    "members": members,
+                    "exemplar": self._public_example(members[0]),
+                    "examples": [self._public_example(member) for member in members[:4]],
+                }
+            )
+
+        for index, cluster in enumerate(summaries, start=1):
+            cluster["cluster_id"] = f"IR-{index:03d}"
+        return summaries
+
+    def _nearest_cluster(self, vector: list[float], clusters: list[dict[str, Any]]) -> dict[str, Any] | None:
+        if not vector or not clusters:
+            return None
+        best_cluster = None
+        best_score = -1.0
+        for cluster in clusters:
+            score = cosine(vector, cluster["centroid"])
+            if score > best_score:
+                best_score = score
+                best_cluster = cluster
+        if best_cluster is None:
+            return None
+        return {
+            "cluster_id": best_cluster["cluster_id"],
+            "score": round(best_score, 4),
+            "size": best_cluster["size"],
+            "exemplar": best_cluster["exemplar"],
+        }
+
+    def _public_example(self, record: dict[str, Any]) -> dict[str, Any]:
+        return {
+            "id": record.get("id"),
+            "source_file": record.get("source_file"),
+            "company": record.get("company"),
+            "title": record.get("title"),
+            "category": record.get("category"),
+            "text": record.get("text"),
+        }
+
+    def _centroid(self, vectors: list[list[float]]) -> list[float]:
         if not vectors:
-            with self._lock:
-                self._average_vector = None
-                self._seed_count = 0
-                self._threshold = None
-                self._signature = signature
-            return self.status()
-
+            return []
         dimensions = len(vectors[0])
         sums = [0.0] * dimensions
         for vector in vectors:
             for index, value in enumerate(vector):
                 sums[index] += float(value)
-        average = normalize_vector([value / len(vectors) for value in sums])
-        seed_scores = [cosine(vector, average) for vector in vectors]
-        threshold = self._threshold_from_seed_scores(seed_scores)
+        return normalize_vector([value / len(vectors) for value in sums])
 
-        with self._lock:
-            self._average_vector = average
-            self._seed_count = len(vectors)
-            self._threshold = threshold
-            self._signature = signature
+    def _nearest(self, vector: list[float], records: list[dict[str, Any]]) -> tuple[float, dict[str, Any] | None]:
+        best_score = 0.0
+        best_record = None
+        for record in records:
+            score = cosine(vector, record["embedding"])
+            if score > best_score:
+                best_score = score
+                best_record = record
+        return best_score, best_record
 
-        return self.status()
+    def _vectors_for_label(self, label: str) -> list[dict[str, Any]]:
+        return [record for record in self._seed_vectors.values() if record.get("label") == label]
 
     def _unavailable_payload(self, reason: str) -> dict[str, Any]:
         with self._lock:
             load_error = self._model_error or reason
+            seed_counts = dict(self._seed_counts)
+            clusters = list(self._clusters)
         return {
             "available": False,
             "reason": "embedding_model_unavailable",
             "message": load_error,
             "model_name": self.model_name,
             "recommendations": [],
-            "seed_count": self._seed_count,
-            "threshold": self._threshold,
+            **self._count_payload(seed_counts, clusters),
+        }
+
+    def _count_payload(self, seed_counts: dict[str, int], clusters: list[dict[str, Any]]) -> dict[str, Any]:
+        return {
+            "not_relevant_seed_count": seed_counts.get(NOT_RELEVANT_LABEL, 0),
+            "reviewed_relevant_seed_count": seed_counts.get(REVIEWED_RELEVANT_LABEL, 0),
+            "seed_count": sum(seed_counts.values()),
+            "irrelevance_cluster_count": len(clusters),
         }
 
     def _vectors_for_rows(self, rows: list[dict], texts: list[str]) -> list[list[float]]:
@@ -269,10 +481,15 @@ class EmbeddingRecommender:
             self._model = model
         return model
 
-    def _load_tag_cache(self) -> None:
-        if not self.tag_cache_path.exists():
+    def _load_seed_cache(self) -> None:
+        if self.seed_cache_path.exists():
+            self._load_cache_file(self.seed_cache_path)
             return
-        with self.tag_cache_path.open("r", encoding="utf-8-sig", errors="replace") as handle:
+        if self.legacy_not_relevant_cache_path.exists():
+            self._load_cache_file(self.legacy_not_relevant_cache_path, legacy_label=NOT_RELEVANT_LABEL)
+
+    def _load_cache_file(self, path: Path, legacy_label: str | None = None) -> None:
+        with path.open("r", encoding="utf-8-sig", errors="replace") as handle:
             for line in handle:
                 line = line.strip()
                 if not line:
@@ -283,35 +500,41 @@ class EmbeddingRecommender:
                     continue
                 if record.get("model_name") != self.model_name:
                     continue
-                key = str(record.get("key", ""))
                 embedding = record.get("embedding")
-                if key and isinstance(embedding, list):
-                    self._tag_vectors[key] = record
+                key = str(record.get("key", ""))
+                if not key or not isinstance(embedding, list):
+                    continue
+                label = str(record.get("label") or legacy_label or "")
+                if label not in {NOT_RELEVANT_LABEL, REVIEWED_RELEVANT_LABEL}:
+                    continue
+                record["label"] = label
+                self._seed_vectors[self._seed_cache_key(label, key)] = record
 
-    def _write_tag_cache(self) -> None:
+    def _write_seed_cache(self) -> None:
         self.cache_dir.mkdir(parents=True, exist_ok=True)
-        tmp_path = self.tag_cache_path.with_suffix(".jsonl.tmp")
+        tmp_path = self.seed_cache_path.with_suffix(".jsonl.tmp")
         with tmp_path.open("w", encoding="utf-8", newline="\n") as handle:
-            for record in sorted(self._tag_vectors.values(), key=lambda item: item["key"]):
+            for record in sorted(
+                self._seed_vectors.values(),
+                key=lambda item: (str(item.get("label", "")), str(item.get("key", ""))),
+            ):
                 handle.write(json.dumps(record, ensure_ascii=False, sort_keys=True))
                 handle.write("\n")
-        os.replace(tmp_path, self.tag_cache_path)
+        os.replace(tmp_path, self.seed_cache_path)
 
-    def _signature_for_records(self, records: list[tuple[str, str]]) -> str:
+    def _signature_for_records(self, records: list[dict[str, Any]]) -> str:
         digest = hashlib.sha256()
-        for key, snippet_text in records:
-            digest.update(key.encode("utf-8", errors="replace"))
+        for record in records:
+            digest.update(str(record["label"]).encode("utf-8", errors="replace"))
             digest.update(b"\0")
-            digest.update(text_hash(snippet_text).encode("ascii"))
+            digest.update(str(record["key"]).encode("utf-8", errors="replace"))
+            digest.update(b"\0")
+            digest.update(str(record["text_hash"]).encode("ascii"))
             digest.update(b"\0")
         return digest.hexdigest()
 
-    def _threshold_from_seed_scores(self, seed_scores: list[float]) -> float:
-        if len(seed_scores) < 4:
-            return 0.42
-        mean = statistics.fmean(seed_scores)
-        stdev = statistics.pstdev(seed_scores)
-        return max(0.34, min(0.56, mean - (1.25 * stdev)))
+    def _seed_cache_key(self, label: str, key: str) -> str:
+        return f"{label}::{key}"
 
     def _row_cache_key(self, row: dict, snippet_text: str) -> str:
         source_file = str(row.get("_source_file", ""))

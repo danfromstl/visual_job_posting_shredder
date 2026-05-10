@@ -19,6 +19,7 @@ SOURCE_DIR = ROOT / "sourceFiles"
 APP_DIR = ROOT / "tagger_app"
 ANNOTATION_DIR = ROOT / "annotations"
 ANNOTATION_FILE = ANNOTATION_DIR / "not_relevant_tags.jsonl"
+REVIEWED_RELEVANT_FILE = ANNOTATION_DIR / "reviewed_relevant_tags.jsonl"
 
 ANNOTATION_LOCK = RLock()
 RECOMMENDER = EmbeddingRecommender(ANNOTATION_DIR / "embedding_cache")
@@ -43,12 +44,12 @@ def annotation_key(source_file: str, snippet_id: str) -> str:
     return f"{source_file}::{snippet_id}"
 
 
-def read_annotations() -> dict[str, dict]:
+def read_tag_annotations(path: Path, required_field: str) -> dict[str, dict]:
     annotations: dict[str, dict] = {}
-    if not ANNOTATION_FILE.exists():
+    if not path.exists():
         return annotations
 
-    with ANNOTATION_FILE.open("r", encoding="utf-8-sig", errors="replace") as handle:
+    with path.open("r", encoding="utf-8-sig", errors="replace") as handle:
         for line in handle:
             line = line.strip()
             if not line:
@@ -60,15 +61,23 @@ def read_annotations() -> dict[str, dict]:
 
             source_file = str(record.get("source_file", ""))
             snippet_id = str(record.get("id", ""))
-            if source_file and snippet_id and record.get("not_relevant") is True:
+            if source_file and snippet_id and record.get(required_field) is True:
                 annotations[annotation_key(source_file, snippet_id)] = record
 
     return annotations
 
 
-def write_annotations(annotations: dict[str, dict]) -> None:
+def read_annotations() -> dict[str, dict]:
+    return read_tag_annotations(ANNOTATION_FILE, "not_relevant")
+
+
+def read_reviewed_relevant_annotations() -> dict[str, dict]:
+    return read_tag_annotations(REVIEWED_RELEVANT_FILE, "reviewed_relevant")
+
+
+def write_tag_annotations(path: Path, annotations: dict[str, dict]) -> None:
     ANNOTATION_DIR.mkdir(exist_ok=True)
-    tmp_path = ANNOTATION_FILE.with_suffix(".jsonl.tmp")
+    tmp_path = path.with_suffix(".jsonl.tmp")
     records = sorted(
         annotations.values(),
         key=lambda item: (str(item.get("source_file", "")), str(item.get("id", ""))),
@@ -79,7 +88,15 @@ def write_annotations(annotations: dict[str, dict]) -> None:
             handle.write(json.dumps(record, ensure_ascii=False, sort_keys=True))
             handle.write("\n")
 
-    os.replace(tmp_path, ANNOTATION_FILE)
+    os.replace(tmp_path, path)
+
+
+def write_annotations(annotations: dict[str, dict]) -> None:
+    write_tag_annotations(ANNOTATION_FILE, annotations)
+
+
+def write_reviewed_relevant_annotations(annotations: dict[str, dict]) -> None:
+    write_tag_annotations(REVIEWED_RELEVANT_FILE, annotations)
 
 
 def read_json_body(handler: BaseHTTPRequestHandler) -> dict:
@@ -98,13 +115,19 @@ def posting_key_for_row(row: dict, line_number: int) -> str:
     )
 
 
-def read_source_rows(source_file: str, annotations: dict[str, dict] | None = None) -> tuple[list[dict], list[dict]]:
+def read_source_rows(
+    source_file: str,
+    annotations: dict[str, dict] | None = None,
+    reviewed_relevant_annotations: dict[str, dict] | None = None,
+) -> tuple[list[dict], list[dict]]:
     path = source_file_or_404(source_file)
     if path is None:
         return [], [{"line": 0, "error": "Unknown source file"}]
 
     if annotations is None:
         annotations = {}
+    if reviewed_relevant_annotations is None:
+        reviewed_relevant_annotations = {}
 
     rows = []
     errors = []
@@ -126,6 +149,8 @@ def read_source_rows(source_file: str, annotations: dict[str, dict] | None = Non
             row["_posting_key"] = posting_key_for_row(row, line_number)
             row["_annotation_key"] = key
             row["_not_relevant"] = key in annotations
+            row["_reviewed_relevant"] = key in reviewed_relevant_annotations and key not in annotations
+            row["_reviewed"] = row["_not_relevant"] or row["_reviewed_relevant"]
             rows.append(row)
 
     return rows, errors
@@ -156,12 +181,18 @@ class TaggerHandler(BaseHTTPRequestHandler):
                 query.get("posting_key", [""])[0],
             )
             return
+        if parsed.path == "/api/irrelevance-clusters":
+            self.handle_irrelevance_clusters()
+            return
         self.handle_static(parsed.path)
 
     def do_POST(self) -> None:
         parsed = urlparse(self.path)
         if parsed.path == "/api/tags":
             self.handle_tag_update()
+            return
+        if parsed.path == "/api/review-posting":
+            self.handle_posting_review()
             return
         self.send_error(HTTPStatus.NOT_FOUND, "Unknown endpoint")
 
@@ -181,7 +212,13 @@ class TaggerHandler(BaseHTTPRequestHandler):
         files = []
         for name, path in available_source_files().items():
             files.append({"name": name, "line_count": count_jsonl_lines(path)})
-        self.send_json({"files": files, "annotation_file": str(ANNOTATION_FILE.relative_to(ROOT))})
+        self.send_json(
+            {
+                "files": files,
+                "annotation_file": str(ANNOTATION_FILE.relative_to(ROOT)),
+                "reviewed_relevant_file": str(REVIEWED_RELEVANT_FILE.relative_to(ROOT)),
+            }
+        )
 
     def handle_snippets(self, source_file: str) -> None:
         path = source_file_or_404(source_file)
@@ -191,14 +228,23 @@ class TaggerHandler(BaseHTTPRequestHandler):
 
         with ANNOTATION_LOCK:
             annotations = read_annotations()
+            reviewed_relevant_annotations = read_reviewed_relevant_annotations()
 
-        rows, errors = read_source_rows(source_file, annotations)
+        rows, errors = read_source_rows(source_file, annotations, reviewed_relevant_annotations)
         self.send_json({"source_file": source_file, "rows": rows, "errors": errors})
 
     def handle_annotations(self) -> None:
         with ANNOTATION_LOCK:
             annotations = read_annotations()
-        self.send_json({"annotations": list(annotations.values()), "count": len(annotations)})
+            reviewed_relevant_annotations = read_reviewed_relevant_annotations()
+        self.send_json(
+            {
+                "annotations": list(annotations.values()),
+                "count": len(annotations),
+                "reviewed_relevant_annotations": list(reviewed_relevant_annotations.values()),
+                "reviewed_relevant_count": len(reviewed_relevant_annotations),
+            }
+        )
 
     def handle_recommender_status(self) -> None:
         self.send_json(RECOMMENDER.status())
@@ -210,9 +256,10 @@ class TaggerHandler(BaseHTTPRequestHandler):
 
         with ANNOTATION_LOCK:
             annotations = read_annotations()
-        rows, errors = read_source_rows(source_file, annotations)
+            reviewed_relevant_annotations = read_reviewed_relevant_annotations()
+        rows, errors = read_source_rows(source_file, annotations, reviewed_relevant_annotations)
         posting_rows = [row for row in rows if row.get("_posting_key") == posting_key]
-        payload = RECOMMENDER.score_rows(annotations, posting_rows)
+        payload = RECOMMENDER.score_rows(annotations, reviewed_relevant_annotations, posting_rows)
         payload.update(
             {
                 "source_file": source_file,
@@ -222,6 +269,12 @@ class TaggerHandler(BaseHTTPRequestHandler):
             }
         )
         self.send_json(payload)
+
+    def handle_irrelevance_clusters(self) -> None:
+        with ANNOTATION_LOCK:
+            annotations = read_annotations()
+            reviewed_relevant_annotations = read_reviewed_relevant_annotations()
+        self.send_json(RECOMMENDER.cluster_summaries(annotations, reviewed_relevant_annotations))
 
     def handle_tag_update(self) -> None:
         try:
@@ -241,8 +294,10 @@ class TaggerHandler(BaseHTTPRequestHandler):
         now = datetime.now(timezone.utc).isoformat()
 
         annotations_snapshot: dict[str, dict]
+        reviewed_relevant_snapshot: dict[str, dict]
         with ANNOTATION_LOCK:
             annotations = read_annotations()
+            reviewed_relevant_annotations = read_reviewed_relevant_annotations()
             if not_relevant:
                 annotations[key] = {
                     "source_file": source_file,
@@ -257,14 +312,90 @@ class TaggerHandler(BaseHTTPRequestHandler):
                     "category": payload.get("category"),
                     "text": payload.get("text"),
                 }
+                reviewed_relevant_annotations.pop(key, None)
             else:
                 annotations.pop(key, None)
             write_annotations(annotations)
+            write_reviewed_relevant_annotations(reviewed_relevant_annotations)
             annotations_snapshot = dict(annotations)
+            reviewed_relevant_snapshot = dict(reviewed_relevant_annotations)
 
-        RECOMMENDER.queue_average_refresh(annotations_snapshot)
+        RECOMMENDER.queue_refresh(annotations_snapshot, reviewed_relevant_snapshot)
 
-        self.send_json({"ok": True, "not_relevant": not_relevant, "count": len(annotations)})
+        self.send_json(
+            {
+                "ok": True,
+                "not_relevant": not_relevant,
+                "count": len(annotations),
+                "reviewed_relevant_count": len(reviewed_relevant_snapshot),
+            }
+        )
+
+    def handle_posting_review(self) -> None:
+        try:
+            payload = read_json_body(self)
+        except (json.JSONDecodeError, UnicodeDecodeError):
+            self.send_json({"error": "Invalid JSON body"}, HTTPStatus.BAD_REQUEST)
+            return
+
+        source_file = str(payload.get("source_file", ""))
+        posting_key = str(payload.get("posting_key", ""))
+        if source_file_or_404(source_file) is None or not posting_key:
+            self.send_json({"error": "Invalid source_file or posting_key"}, HTTPStatus.BAD_REQUEST)
+            return
+
+        now = datetime.now(timezone.utc).isoformat()
+        with ANNOTATION_LOCK:
+            annotations = read_annotations()
+            reviewed_relevant_annotations = read_reviewed_relevant_annotations()
+            rows, errors = read_source_rows(source_file, annotations, reviewed_relevant_annotations)
+            posting_rows = [row for row in rows if row.get("_posting_key") == posting_key]
+            marked_relevant = 0
+            skipped_not_relevant = 0
+
+            for row in posting_rows:
+                snippet_id = str(row.get("id", ""))
+                if not snippet_id:
+                    continue
+                key = annotation_key(source_file, snippet_id)
+                if key in annotations:
+                    reviewed_relevant_annotations.pop(key, None)
+                    skipped_not_relevant += 1
+                    continue
+
+                reviewed_relevant_annotations[key] = {
+                    "source_file": source_file,
+                    "id": snippet_id,
+                    "tag": "reviewed_relevant",
+                    "reviewed_relevant": True,
+                    "updated_at": now,
+                    "job_key": row.get("job_key"),
+                    "job_name": row.get("job_name"),
+                    "company": row.get("company"),
+                    "title": row.get("title"),
+                    "category": row.get("category"),
+                    "text": row.get("text"),
+                }
+                marked_relevant += 1
+
+            write_reviewed_relevant_annotations(reviewed_relevant_annotations)
+            annotations_snapshot = dict(annotations)
+            reviewed_relevant_snapshot = dict(reviewed_relevant_annotations)
+
+        RECOMMENDER.queue_refresh(annotations_snapshot, reviewed_relevant_snapshot)
+        self.send_json(
+            {
+                "ok": True,
+                "source_file": source_file,
+                "posting_key": posting_key,
+                "rows_reviewed": len(posting_rows),
+                "marked_relevant": marked_relevant,
+                "skipped_not_relevant": skipped_not_relevant,
+                "not_relevant_count": len(annotations_snapshot),
+                "reviewed_relevant_count": len(reviewed_relevant_snapshot),
+                "errors": errors,
+            }
+        )
 
     def handle_static(self, request_path: str) -> None:
         relative = unquote(request_path).lstrip("/")
