@@ -2,29 +2,29 @@
 <text x="24.0" y="34.0" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#22201d">Heuristic category rollup</text>
 <text x="24.0" y="80.0" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#22201d">Other or mixed</text>
 <rect x="285" y="62" width="735.0" height="24" rx="4" fill="#777777" />
-<text x="1028.0" y="80.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#6b665c">306 snippets / 261 clusters</text>
+<text x="1028.0" y="80.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#6b665c">356 snippets / 308 clusters</text>
 <text x="24.0" y="118.0" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#22201d">About company / mission / culture</text>
-<rect x="285" y="100" width="338.2" height="24" rx="4" fill="#2f6f73" />
-<text x="631.2" y="118.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#6b665c">139 snippets / 43 clusters</text>
+<rect x="285" y="100" width="283.7" height="24" rx="4" fill="#2f6f73" />
+<text x="576.7" y="118.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#6b665c">135 snippets / 43 clusters</text>
 <text x="24.0" y="156.0" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#22201d">Section headers</text>
-<rect x="285" y="138" width="217.1" height="24" rx="4" fill="#7c5fb5" />
-<text x="510.1" y="156.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#6b665c">88 snippets / 36 clusters</text>
+<rect x="285" y="138" width="222.4" height="24" rx="4" fill="#7c5fb5" />
+<text x="515.4" y="156.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#6b665c">105 snippets / 42 clusters</text>
 <text x="24.0" y="194.0" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#22201d">Compensation and benefits</text>
-<rect x="285" y="176" width="141.0" height="24" rx="4" fill="#b84a3a" />
-<text x="434.0" y="194.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#6b665c">56 snippets / 19 clusters</text>
-<text x="24.0" y="232.0" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#22201d">Application / recruiter process</text>
-<rect x="285" y="214" width="88.8" height="24" rx="4" fill="#6f7b35" />
-<text x="381.8" y="232.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#6b665c">34 snippets / 16 clusters</text>
-<text x="24.0" y="270.0" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#22201d">Generic role context / team setup</text>
-<rect x="285" y="252" width="74.5" height="24" rx="4" fill="#4f7d57" />
-<text x="367.5" y="270.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#6b665c">28 snippets / 17 clusters</text>
+<rect x="285" y="176" width="124.4" height="24" rx="4" fill="#b84a3a" />
+<text x="417.4" y="194.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#6b665c">57 snippets / 19 clusters</text>
+<text x="24.0" y="232.0" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#22201d">Generic role context / team setup</text>
+<rect x="285" y="214" width="110.1" height="24" rx="4" fill="#4f7d57" />
+<text x="403.1" y="232.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#6b665c">50 snippets / 21 clusters</text>
+<text x="24.0" y="270.0" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#22201d">Application / recruiter process</text>
+<rect x="285" y="252" width="81.5" height="24" rx="4" fill="#6f7b35" />
+<text x="374.5" y="270.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#6b665c">36 snippets / 17 clusters</text>
 <text x="24.0" y="308.0" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#22201d">Citizenship, clearance, authorization</text>
-<rect x="285" y="290" width="34.1" height="24" rx="4" fill="#9a7b1f" />
-<text x="327.1" y="308.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#6b665c">11 snippets / 5 clusters</text>
+<rect x="285" y="290" width="30.5" height="24" rx="4" fill="#9a7b1f" />
+<text x="323.5" y="308.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#6b665c">11 snippets / 5 clusters</text>
 <text x="24.0" y="346.0" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#22201d">EEO, legal, accommodation boilerplate</text>
-<rect x="285" y="328" width="29.4" height="24" rx="4" fill="#8c5a3b" />
-<text x="322.4" y="346.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#6b665c">9 snippets / 4 clusters</text>
+<rect x="285" y="328" width="28.4" height="24" rx="4" fill="#8c5a3b" />
+<text x="321.4" y="346.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#6b665c">10 snippets / 4 clusters</text>
 <text x="24.0" y="384.0" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#22201d">Job-title restatement / role label</text>
-<rect x="285" y="366" width="17.5" height="24" rx="4" fill="#3d6ea8" />
-<text x="310.5" y="384.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#6b665c">4 snippets / 1 clusters</text>
+<rect x="285" y="366" width="22.3" height="24" rx="4" fill="#3d6ea8" />
+<text x="315.3" y="384.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#6b665c">7 snippets / 2 clusters</text>
 </svg>

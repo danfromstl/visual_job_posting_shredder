@@ -1,0 +1,12 @@
+{
+  "bundle_version": "job_snippet_relevance_20260510T174010Z",
+  "created_at": "2026-05-10T17:40:11.014906+00:00",
+  "model_name": "sentence-transformers/all-mpnet-base-v2",
+  "dimension": 768,
+  "seed_count": 2284,
+  "not_relevant_seed_count": 767,
+  "reviewed_relevant_seed_count": 1517,
+  "cluster_count": 461,
+  "cluster_threshold": 0.68,
+  "source_seed_cache": "C:\\Users\\danfr\\Documents\\GitHub\\visual_job_posting_shredder\\annotations\\embedding_cache\\seed_vectors.jsonl"
+}

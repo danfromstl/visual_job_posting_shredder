@@ -2,100 +2,100 @@
 <text x="24.0" y="36.0" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#22201d">Cluster map from MPNet embedding space</text>
 <text x="24.0" y="58.0" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="400" fill="#6b665c">PCA projection of the 90 largest irrelevance clusters; bubble size = cluster size.</text>
 <rect x="70" y="80" width="820" height="620" fill="#fffefa" stroke="#d9d4c8" />
-<circle cx="344.7" cy="104.0" r="16.0" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-001 | 25 | About company / mission / culture</title></circle>
-<text x="363.7" y="108.0" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#22201d">IR-001</text>
-<circle cx="94.0" cy="550.0" r="14.3" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-002 | 20 | About company / mission / culture</title></circle>
-<text x="111.3" y="554.0" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#22201d">IR-002</text>
-<circle cx="100.8" cy="380.8" r="9.6" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-003 | 9 | About company / mission / culture</title></circle>
-<text x="113.4" y="384.8" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#22201d">IR-003</text>
-<circle cx="189.8" cy="187.1" r="9.6" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-004 | 9 | About company / mission / culture</title></circle>
-<text x="202.4" y="191.1" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#22201d">IR-004</text>
-<circle cx="624.3" cy="269.6" r="8.5" fill="#b84a3a" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-005 | 7 | Compensation and benefits</title></circle>
-<circle cx="693.9" cy="300.3" r="7.8" fill="#b84a3a" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-006 | 6 | Compensation and benefits</title></circle>
-<circle cx="371.7" cy="177.4" r="7.8" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-007 | 6 | About company / mission / culture</title></circle>
-<circle cx="624.9" cy="271.2" r="7.2" fill="#6f7b35" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-008 | 5 | Application / recruiter process</title></circle>
-<circle cx="724.0" cy="352.0" r="7.2" fill="#b84a3a" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-009 | 5 | Compensation and benefits</title></circle>
-<circle cx="609.8" cy="225.1" r="7.2" fill="#8c5a3b" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-010 | 5 | EEO, legal, accommodation boilerplate</title></circle>
-<circle cx="561.3" cy="285.9" r="7.2" fill="#b84a3a" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-011 | 5 | Compensation and benefits</title></circle>
-<circle cx="259.7" cy="187.6" r="6.4" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-012 | 4 | Section headers</title></circle>
-<circle cx="577.3" cy="282.4" r="6.4" fill="#b84a3a" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-013 | 4 | Compensation and benefits</title></circle>
-<circle cx="439.5" cy="334.7" r="6.4" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-014 | 4 | Other or mixed</title></circle>
-<circle cx="798.3" cy="404.2" r="6.4" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-015 | 4 | Other or mixed</title></circle>
-<circle cx="389.3" cy="431.8" r="6.4" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-016 | 4 | About company / mission / culture</title></circle>
-<circle cx="335.6" cy="299.3" r="6.4" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-017 | 4 | Section headers</title></circle>
-<circle cx="731.4" cy="399.6" r="6.4" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-018 | 4 | Section headers</title></circle>
-<circle cx="194.0" cy="363.0" r="6.4" fill="#3d6ea8" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-019 | 4 | Job-title restatement / role label</title></circle>
-<circle cx="443.2" cy="200.3" r="6.4" fill="#6f7b35" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-020 | 4 | Application / recruiter process</title></circle>
-<circle cx="597.8" cy="262.4" r="6.4" fill="#9a7b1f" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-021 | 4 | Citizenship, clearance, authorization</title></circle>
-<circle cx="211.0" cy="253.5" r="6.4" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-022 | 4 | Section headers</title></circle>
-<circle cx="254.6" cy="398.7" r="6.4" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-023 | 4 | About company / mission / culture</title></circle>
-<circle cx="118.1" cy="304.8" r="6.4" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-024 | 4 | About company / mission / culture</title></circle>
-<circle cx="805.1" cy="378.0" r="6.4" fill="#b84a3a" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-025 | 4 | Compensation and benefits</title></circle>
-<circle cx="549.4" cy="247.5" r="6.4" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-026 | 4 | Section headers</title></circle>
-<circle cx="183.8" cy="217.7" r="5.5" fill="#4f7d57" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-027 | 3 | Generic role context / team setup</title></circle>
-<circle cx="633.3" cy="363.0" r="5.5" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-028 | 3 | Section headers</title></circle>
-<circle cx="274.4" cy="339.0" r="5.5" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-029 | 3 | About company / mission / culture</title></circle>
-<circle cx="307.5" cy="664.8" r="5.5" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-030 | 3 | Other or mixed</title></circle>
-<circle cx="295.7" cy="676.0" r="5.5" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-031 | 3 | Other or mixed</title></circle>
-<circle cx="314.0" cy="634.4" r="5.5" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-032 | 3 | Other or mixed</title></circle>
-<circle cx="262.2" cy="547.5" r="5.5" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-033 | 3 | Other or mixed</title></circle>
-<circle cx="317.4" cy="671.8" r="5.5" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-034 | 3 | Other or mixed</title></circle>
-<circle cx="493.6" cy="248.3" r="5.5" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-035 | 3 | Section headers</title></circle>
-<circle cx="311.6" cy="277.4" r="5.5" fill="#4f7d57" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-036 | 3 | Generic role context / team setup</title></circle>
-<circle cx="712.4" cy="318.5" r="5.5" fill="#b84a3a" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-037 | 3 | Compensation and benefits</title></circle>
-<circle cx="458.8" cy="259.7" r="5.5" fill="#6f7b35" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-038 | 3 | Application / recruiter process</title></circle>
-<circle cx="415.9" cy="227.7" r="5.5" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-039 | 3 | Section headers</title></circle>
-<circle cx="299.4" cy="353.1" r="5.5" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-040 | 3 | About company / mission / culture</title></circle>
-<circle cx="584.1" cy="422.4" r="5.5" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-041 | 3 | Section headers</title></circle>
-<circle cx="415.9" cy="355.5" r="5.5" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-042 | 3 | Section headers</title></circle>
-<circle cx="673.4" cy="382.1" r="5.5" fill="#b84a3a" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-043 | 3 | Compensation and benefits</title></circle>
-<circle cx="283.3" cy="305.0" r="5.5" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-044 | 3 | Section headers</title></circle>
-<circle cx="353.6" cy="206.2" r="5.5" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-045 | 3 | Other or mixed</title></circle>
-<circle cx="866.0" cy="364.8" r="5.5" fill="#b84a3a" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-046 | 3 | Compensation and benefits</title></circle>
-<circle cx="567.9" cy="295.6" r="5.5" fill="#6f7b35" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-047 | 3 | Application / recruiter process</title></circle>
-<circle cx="435.6" cy="375.6" r="5.5" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-048 | 3 | Section headers</title></circle>
-<circle cx="233.7" cy="200.0" r="5.5" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-049 | 3 | About company / mission / culture</title></circle>
-<circle cx="664.4" cy="368.7" r="5.5" fill="#b84a3a" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-050 | 3 | Compensation and benefits</title></circle>
-<circle cx="498.6" cy="294.6" r="5.5" fill="#6f7b35" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-051 | 3 | Application / recruiter process</title></circle>
-<circle cx="306.1" cy="404.3" r="5.5" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-052 | 3 | About company / mission / culture</title></circle>
-<circle cx="710.2" cy="340.8" r="5.5" fill="#b84a3a" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-053 | 3 | Compensation and benefits</title></circle>
-<circle cx="560.2" cy="253.2" r="5.5" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-054 | 3 | Section headers</title></circle>
-<circle cx="651.9" cy="426.9" r="5.5" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-055 | 3 | Other or mixed</title></circle>
-<circle cx="619.1" cy="393.4" r="5.5" fill="#b84a3a" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-056 | 3 | Compensation and benefits</title></circle>
-<circle cx="573.2" cy="457.2" r="5.5" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-057 | 3 | Other or mixed</title></circle>
-<circle cx="379.7" cy="402.9" r="5.5" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-058 | 3 | Section headers</title></circle>
-<circle cx="655.9" cy="283.4" r="5.5" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-059 | 3 | Other or mixed</title></circle>
-<circle cx="797.8" cy="353.0" r="5.5" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-060 | 3 | Section headers</title></circle>
-<circle cx="489.1" cy="327.8" r="5.5" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-061 | 3 | Other or mixed</title></circle>
-<circle cx="573.2" cy="303.8" r="5.5" fill="#9a7b1f" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-062 | 3 | Citizenship, clearance, authorization</title></circle>
-<circle cx="293.2" cy="372.5" r="5.5" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-063 | 3 | About company / mission / culture</title></circle>
-<circle cx="376.2" cy="316.6" r="4.5" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-064 | 2 | Section headers</title></circle>
-<circle cx="196.0" cy="300.4" r="4.5" fill="#4f7d57" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-065 | 2 | Generic role context / team setup</title></circle>
-<circle cx="126.0" cy="275.2" r="4.5" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-066 | 2 | About company / mission / culture</title></circle>
-<circle cx="137.8" cy="305.4" r="4.5" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-067 | 2 | About company / mission / culture</title></circle>
-<circle cx="168.8" cy="281.4" r="4.5" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-068 | 2 | Section headers</title></circle>
-<circle cx="612.8" cy="278.5" r="4.5" fill="#6f7b35" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-069 | 2 | Application / recruiter process</title></circle>
-<circle cx="582.4" cy="308.3" r="4.5" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-070 | 2 | Section headers</title></circle>
-<circle cx="407.0" cy="294.1" r="4.5" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-071 | 2 | Other or mixed</title></circle>
-<circle cx="398.0" cy="314.0" r="4.5" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-072 | 2 | Other or mixed</title></circle>
-<circle cx="200.6" cy="252.0" r="4.5" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-073 | 2 | Other or mixed</title></circle>
-<circle cx="372.4" cy="327.6" r="4.5" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-074 | 2 | About company / mission / culture</title></circle>
-<circle cx="134.8" cy="327.0" r="4.5" fill="#4f7d57" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-075 | 2 | Generic role context / team setup</title></circle>
-<circle cx="176.0" cy="415.6" r="4.5" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-076 | 2 | Other or mixed</title></circle>
-<circle cx="149.2" cy="368.5" r="4.5" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-077 | 2 | About company / mission / culture</title></circle>
-<circle cx="626.1" cy="264.8" r="4.5" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-078 | 2 | Other or mixed</title></circle>
-<circle cx="368.6" cy="227.7" r="4.5" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-079 | 2 | About company / mission / culture</title></circle>
-<circle cx="388.2" cy="213.6" r="4.5" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-080 | 2 | About company / mission / culture</title></circle>
-<circle cx="418.3" cy="201.4" r="4.5" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-081 | 2 | Section headers</title></circle>
-<circle cx="170.7" cy="353.3" r="4.5" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-082 | 2 | Section headers</title></circle>
-<circle cx="345.9" cy="261.0" r="4.5" fill="#4f7d57" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-083 | 2 | Generic role context / team setup</title></circle>
-<circle cx="709.8" cy="342.8" r="4.5" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-084 | 2 | Section headers</title></circle>
-<circle cx="341.7" cy="350.1" r="4.5" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-085 | 2 | Other or mixed</title></circle>
-<circle cx="215.1" cy="224.5" r="4.5" fill="#4f7d57" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-086 | 2 | Generic role context / team setup</title></circle>
-<circle cx="271.2" cy="184.6" r="4.5" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-087 | 2 | About company / mission / culture</title></circle>
-<circle cx="546.7" cy="295.1" r="4.5" fill="#9a7b1f" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-088 | 2 | Citizenship, clearance, authorization</title></circle>
-<circle cx="763.1" cy="388.1" r="4.5" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-089 | 2 | Other or mixed</title></circle>
-<circle cx="447.8" cy="299.8" r="4.5" fill="#6f7b35" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-090 | 2 | Application / recruiter process</title></circle>
+<circle cx="365.0" cy="676.0" r="14.3" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-001 | 20 | About company / mission / culture</title></circle>
+<text x="382.3" y="680.0" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#22201d">IR-001</text>
+<circle cx="94.0" cy="212.2" r="13.9" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-002 | 19 | About company / mission / culture</title></circle>
+<text x="110.9" y="216.2" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#22201d">IR-002</text>
+<circle cx="95.3" cy="394.8" r="12.4" fill="#4f7d57" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-003 | 15 | Generic role context / team setup</title></circle>
+<text x="110.7" y="398.8" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#22201d">IR-003</text>
+<circle cx="217.2" cy="589.3" r="9.6" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-004 | 9 | About company / mission / culture</title></circle>
+<text x="229.8" y="593.3" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#22201d">IR-004</text>
+<circle cx="629.1" cy="485.2" r="8.5" fill="#b84a3a" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-005 | 7 | Compensation and benefits</title></circle>
+<circle cx="326.4" cy="479.2" r="8.5" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-006 | 7 | About company / mission / culture</title></circle>
+<circle cx="620.0" cy="518.5" r="7.8" fill="#8c5a3b" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-007 | 6 | EEO, legal, accommodation boilerplate</title></circle>
+<circle cx="305.0" cy="626.3" r="7.8" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-008 | 6 | Section headers</title></circle>
+<circle cx="727.5" cy="467.1" r="7.8" fill="#b84a3a" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-009 | 6 | Compensation and benefits</title></circle>
+<circle cx="389.2" cy="589.1" r="7.8" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-010 | 6 | About company / mission / culture</title></circle>
+<circle cx="649.8" cy="471.0" r="7.2" fill="#6f7b35" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-011 | 5 | Application / recruiter process</title></circle>
+<circle cx="203.6" cy="364.6" r="7.2" fill="#3d6ea8" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-012 | 5 | Job-title restatement / role label</title></circle>
+<circle cx="372.9" cy="649.9" r="7.2" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-013 | 5 | About company / mission / culture</title></circle>
+<circle cx="353.0" cy="476.7" r="7.2" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-014 | 5 | Section headers</title></circle>
+<circle cx="736.2" cy="391.8" r="7.2" fill="#b84a3a" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-015 | 5 | Compensation and benefits</title></circle>
+<circle cx="583.9" cy="497.7" r="7.2" fill="#b84a3a" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-016 | 5 | Compensation and benefits</title></circle>
+<circle cx="163.6" cy="446.9" r="6.4" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-017 | 4 | About company / mission / culture</title></circle>
+<circle cx="590.1" cy="482.1" r="6.4" fill="#b84a3a" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-018 | 4 | Compensation and benefits</title></circle>
+<circle cx="467.3" cy="434.1" r="6.4" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-019 | 4 | Other or mixed</title></circle>
+<circle cx="428.7" cy="587.2" r="6.4" fill="#6f7b35" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-020 | 4 | Application / recruiter process</title></circle>
+<circle cx="792.9" cy="343.9" r="6.4" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-021 | 4 | Other or mixed</title></circle>
+<circle cx="408.0" cy="348.9" r="6.4" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-022 | 4 | About company / mission / culture</title></circle>
+<circle cx="685.3" cy="389.7" r="6.4" fill="#b84a3a" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-023 | 4 | Compensation and benefits</title></circle>
+<circle cx="741.8" cy="345.7" r="6.4" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-024 | 4 | Section headers</title></circle>
+<circle cx="617.3" cy="479.8" r="6.4" fill="#9a7b1f" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-025 | 4 | Citizenship, clearance, authorization</title></circle>
+<circle cx="230.1" cy="507.9" r="6.4" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-026 | 4 | Section headers</title></circle>
+<circle cx="274.3" cy="353.6" r="6.4" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-027 | 4 | About company / mission / culture</title></circle>
+<circle cx="150.0" cy="467.1" r="6.4" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-028 | 4 | About company / mission / culture</title></circle>
+<circle cx="804.0" cy="365.8" r="6.4" fill="#b84a3a" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-029 | 4 | Compensation and benefits</title></circle>
+<circle cx="575.6" cy="503.3" r="6.4" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-030 | 4 | Section headers</title></circle>
+<circle cx="332.6" cy="314.3" r="6.4" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-031 | 4 | Section headers</title></circle>
+<circle cx="215.5" cy="560.0" r="5.5" fill="#4f7d57" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-032 | 3 | Generic role context / team setup</title></circle>
+<circle cx="631.2" cy="391.4" r="5.5" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-033 | 3 | Section headers</title></circle>
+<circle cx="160.8" cy="277.3" r="5.5" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-034 | 3 | Other or mixed</title></circle>
+<circle cx="302.0" cy="439.2" r="5.5" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-035 | 3 | About company / mission / culture</title></circle>
+<circle cx="314.9" cy="109.1" r="5.5" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-036 | 3 | Other or mixed</title></circle>
+<circle cx="297.3" cy="104.0" r="5.5" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-037 | 3 | Other or mixed</title></circle>
+<circle cx="315.3" cy="139.8" r="5.5" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-038 | 3 | Other or mixed</title></circle>
+<circle cx="266.4" cy="219.8" r="5.5" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-039 | 3 | Other or mixed</title></circle>
+<circle cx="314.9" cy="115.9" r="5.5" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-040 | 3 | Other or mixed</title></circle>
+<circle cx="506.7" cy="506.8" r="5.5" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-041 | 3 | Section headers</title></circle>
+<circle cx="330.3" cy="510.1" r="5.5" fill="#4f7d57" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-042 | 3 | Generic role context / team setup</title></circle>
+<circle cx="716.5" cy="440.2" r="5.5" fill="#b84a3a" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-043 | 3 | Compensation and benefits</title></circle>
+<circle cx="488.3" cy="492.6" r="5.5" fill="#6f7b35" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-044 | 3 | Application / recruiter process</title></circle>
+<circle cx="440.1" cy="534.9" r="5.5" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-045 | 3 | Section headers</title></circle>
+<circle cx="326.3" cy="418.7" r="5.5" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-046 | 3 | About company / mission / culture</title></circle>
+<circle cx="595.0" cy="324.2" r="5.5" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-047 | 3 | Section headers</title></circle>
+<circle cx="431.8" cy="428.4" r="5.5" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-048 | 3 | Section headers</title></circle>
+<circle cx="225.2" cy="602.0" r="5.5" fill="#4f7d57" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-049 | 3 | Generic role context / team setup</title></circle>
+<circle cx="293.1" cy="437.9" r="5.5" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-050 | 3 | Section headers</title></circle>
+<circle cx="389.4" cy="541.9" r="5.5" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-051 | 3 | Other or mixed</title></circle>
+<circle cx="866.0" cy="373.6" r="5.5" fill="#b84a3a" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-052 | 3 | Compensation and benefits</title></circle>
+<circle cx="590.2" cy="441.2" r="5.5" fill="#6f7b35" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-053 | 3 | Application / recruiter process</title></circle>
+<circle cx="454.6" cy="389.9" r="5.5" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-054 | 3 | Section headers</title></circle>
+<circle cx="262.6" cy="591.7" r="5.5" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-055 | 3 | About company / mission / culture</title></circle>
+<circle cx="655.4" cy="379.6" r="5.5" fill="#b84a3a" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-056 | 3 | Compensation and benefits</title></circle>
+<circle cx="523.2" cy="442.9" r="5.5" fill="#6f7b35" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-057 | 3 | Application / recruiter process</title></circle>
+<circle cx="317.5" cy="343.5" r="5.5" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-058 | 3 | About company / mission / culture</title></circle>
+<circle cx="724.9" cy="405.3" r="5.5" fill="#b84a3a" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-059 | 3 | Compensation and benefits</title></circle>
+<circle cx="560.4" cy="497.3" r="5.5" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-060 | 3 | Section headers</title></circle>
+<circle cx="670.2" cy="328.1" r="5.5" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-061 | 3 | Other or mixed</title></circle>
+<circle cx="639.0" cy="359.6" r="5.5" fill="#b84a3a" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-062 | 3 | Compensation and benefits</title></circle>
+<circle cx="593.1" cy="300.4" r="5.5" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-063 | 3 | Other or mixed</title></circle>
+<circle cx="402.7" cy="348.9" r="5.5" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-064 | 3 | Section headers</title></circle>
+<circle cx="667.0" cy="477.7" r="5.5" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-065 | 3 | Other or mixed</title></circle>
+<circle cx="793.5" cy="393.3" r="5.5" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-066 | 3 | Section headers</title></circle>
+<circle cx="511.2" cy="451.3" r="5.5" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-067 | 3 | Other or mixed</title></circle>
+<circle cx="592.3" cy="444.2" r="5.5" fill="#9a7b1f" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-068 | 3 | Citizenship, clearance, authorization</title></circle>
+<circle cx="310.0" cy="375.4" r="5.5" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-069 | 3 | About company / mission / culture</title></circle>
+<circle cx="618.2" cy="483.6" r="4.5" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-070 | 2 | Other or mixed</title></circle>
+<circle cx="324.6" cy="614.2" r="4.5" fill="#4f7d57" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-071 | 2 | Generic role context / team setup</title></circle>
+<circle cx="524.7" cy="446.5" r="4.5" fill="#6f7b35" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-072 | 2 | Application / recruiter process</title></circle>
+<circle cx="504.5" cy="454.3" r="4.5" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-073 | 2 | Section headers</title></circle>
+<circle cx="399.5" cy="466.2" r="4.5" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-074 | 2 | Section headers</title></circle>
+<circle cx="229.3" cy="464.4" r="4.5" fill="#4f7d57" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-075 | 2 | Generic role context / team setup</title></circle>
+<circle cx="154.4" cy="503.7" r="4.5" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-076 | 2 | About company / mission / culture</title></circle>
+<circle cx="200.5" cy="480.0" r="4.5" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-077 | 2 | Section headers</title></circle>
+<circle cx="629.4" cy="459.9" r="4.5" fill="#6f7b35" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-078 | 2 | Application / recruiter process</title></circle>
+<circle cx="601.6" cy="448.8" r="4.5" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-079 | 2 | Section headers</title></circle>
+<circle cx="424.2" cy="466.3" r="4.5" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-080 | 2 | Other or mixed</title></circle>
+<circle cx="417.7" cy="462.0" r="4.5" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-081 | 2 | Other or mixed</title></circle>
+<circle cx="233.7" cy="522.0" r="4.5" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-082 | 2 | Other or mixed</title></circle>
+<circle cx="391.1" cy="423.2" r="4.5" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-083 | 2 | About company / mission / culture</title></circle>
+<circle cx="160.1" cy="439.5" r="4.5" fill="#4f7d57" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-084 | 2 | Generic role context / team setup</title></circle>
+<circle cx="190.1" cy="352.9" r="4.5" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-085 | 2 | Other or mixed</title></circle>
+<circle cx="157.1" cy="381.3" r="4.5" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-086 | 2 | About company / mission / culture</title></circle>
+<circle cx="647.6" cy="476.9" r="4.5" fill="#777777" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-087 | 2 | Other or mixed</title></circle>
+<circle cx="610.0" cy="509.6" r="4.5" fill="#7c5fb5" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-088 | 2 | Section headers</title></circle>
+<circle cx="396.6" cy="549.5" r="4.5" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-089 | 2 | About company / mission / culture</title></circle>
+<circle cx="418.1" cy="546.8" r="4.5" fill="#2f6f73" fill-opacity="0.78" stroke="#22201d" stroke-opacity="0.22"><title>IR-090 | 2 | About company / mission / culture</title></circle>
 <text x="925.0" y="70.0" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" fill="#22201d">Legend</text>
 <rect x="925" y="84" width="16" height="16" rx="3" fill="#2f6f73" />
 <text x="949.0" y="97.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="400" fill="#22201d">About company / mission / culture</text>

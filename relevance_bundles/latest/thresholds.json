@@ -1,0 +1,5 @@
+{
+  "not_relevant_margin": 0.02,
+  "reviewed_relevant_margin": 0.02,
+  "min_not_relevant_score_without_relevant": 0.5
+}
